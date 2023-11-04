@@ -4,4 +4,4 @@
 
 local Util = require("lazyvim.util")
 local newmap = Util.safe_keymap_set
-newmap("n", "<leader>rr", "<cmd>RustDebuggables<cr>", { desc = "[R]ust Debug Start" })
+-- newmap("n", "<leader>rr", "<cmd>RustDebuggables<cr>", { desc = "[R]ust Debug Start" })
