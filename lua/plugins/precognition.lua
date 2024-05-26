@@ -1,7 +1,9 @@
 return {
   "tris203/precognition.nvim",
-  config = {
-    -- hints = { Caret = { text = "à", prio = 2 } },
+  -- branch = "replacement_chars",
+  opts = {
+    highlightColor = { link = "String" },
+    hints = { Caret = { text = "à", prio = 2 } },
     -- startVisible = true,
     -- showBlankVirtLine = true,
     -- hints = {
