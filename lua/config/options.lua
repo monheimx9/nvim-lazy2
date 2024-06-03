@@ -3,3 +3,4 @@
 -- Add any additional options here
 local opt = vim.opt
 opt.clipboard = "unnamedplus"
+vim.lsp.protocol.make_client_capabilities().workspace.didChangeWatchedFiles.dynamicRegistration = false
