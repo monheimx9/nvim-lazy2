@@ -1,5 +1,6 @@
-require("which-key").register({
-  ["<leader>i"] = { name = "Duck [I]nterface", _ = "which_key_ignore" },
+require("which-key").add({
+  { "<leader>i", group = "Duck [I]nterface", icon = "🦆" },
+  { "<leader>i_", hidden = true },
 })
 return {
   {
