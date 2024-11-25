@@ -1,6 +1,6 @@
 return {
   "tris203/precognition.nvim",
-  -- branch = "extended_chars",
+  -- branch = "issue81",
   opts = {
     highlightColor = { link = "String" },
     hints = { Caret = { text = "à", prio = 2 } },

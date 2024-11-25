@@ -5,3 +5,5 @@ local opt = vim.opt
 opt.clipboard = "unnamedplus"
 -- Speed up Rust CMP / LSP
 vim.lsp.protocol.make_client_capabilities().workspace.didChangeWatchedFiles.dynamicRegistration = false
+vim.o.spell = true
+vim.o.spelllang = "fr,en"

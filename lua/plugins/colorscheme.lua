@@ -17,7 +17,7 @@ return {
         light = "latte",
         dark = "mocha",
       },
-      transparent_background = true,
+      transparent_background = false,
       color_overrides = {
         macchiato = {
           rosewater = "#efc9c2",

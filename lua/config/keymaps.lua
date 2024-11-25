@@ -11,7 +11,7 @@ map({ "i" }, "jkj", "<Esc>lli", { desc = "Exit insert + go right & i", silent = 
 -- Option<Vec<String>>
 -- floating terminal
 local lazyterm = function()
-  LazyVim.terminal(nil, { cwd = LazyVim.root() })
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
 end
 map("n", "<leader>ft", lazyterm, { desc = "Terminal (Root Dir)" })
 map("n", "<leader>fT", function()
