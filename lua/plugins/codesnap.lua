@@ -1,3 +1,9 @@
+local function workspace()
+  local h = vim.fn.getcwd()
+  local dir_name = string.match(h, "[^/]+$")
+  return dir_name
+end
+
 return {
   "mistricky/codesnap.nvim",
   build = "make build_generator",
@@ -18,5 +24,6 @@ return {
     has_line_number = true,
     watermark = "yeet the mouse",
     show_workspace = true,
+    code_font_family = "JetBrainsMono Nerd Font",
   },
 }
