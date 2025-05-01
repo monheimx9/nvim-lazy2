@@ -1,35 +1,61 @@
 local function get_size()
-  local pipe = io.popen("xrandr | grep -oP '(?<=connected |primary )[x\\d]+'", "r")
-  local resolution = {}
-  local screen_size = {}
-  if pipe ~= nil then
-    local i = 0
-    for line in pipe:lines() do
-      resolution[i] = line
-      i = i + 1
+  -- Get terminal size in cells
+  local width_cells = vim.api.nvim_get_option("columns")
+  local height_cells = vim.api.nvim_get_option("lines")
+
+  -- Default cell size in pixels (from snacks.image :checkhealth)
+  local cell_width = 10
+  local cell_height = 24
+
+  -- Optional: Query terminal for cell size (works in some terminals like Kitty)
+  local function query_cell_size()
+    local handle = io.popen("echo -e '\033[18t' > /dev/tty; cat /dev/tty", "r")
+    if handle then
+      local response = handle:read("*a")
+      handle:close()
+      local h, w = response:match("\033%[8;(%d+);(%d+)t")
+      if h and w then
+        return tonumber(w) / width_cells, tonumber(h) / height_cells
+      end
     end
-    pipe:close()
+    return cell_width, cell_height
   end
-  local function csize(r)
-    if r == "1920x1080" then
-      return 76
-    elseif r == "2560x1440" then
-      return 120
+
+  cell_width, cell_height = query_cell_size()
+
+  -- Estimate screen size in pixels
+  local screen_width = math.floor(width_cells * cell_width)
+  local screen_height = math.floor(height_cells * cell_height)
+
+  -- Map screen size to nvim-dap-ui layout sizes (mimic original csize/lsize logic)
+  local function csize(width, height)
+    -- Approximate resolution to match original logic
+    if width <= 1920 and height <= 900 then
+      return 76 -- Original value for 1920x1080
+    elseif width <= 2560 and height <= 1300 then
+      return 120 -- Original value for 2560x1440
+    else
+      return 100 -- Fallback for other sizes
     end
   end
-  local function lsize(r)
-    if r == "1920x1080" then
-      return 21
-    elseif r == "2560x1440" then
-      return 28
+
+  local function lsize(width, height)
+    if width <= 1920 and height <= 900 then
+      return 21 -- Original value for 1920x1080
+    elseif width <= 2560 and height <= 1300 then
+      return 28 -- Original value for 2560x1440
+    else
+      return 25 -- Fallback for other sizes
     end
   end
-  screen_size[0] = 50
-  screen_size[1] = 15
-  if resolution ~= nil then
-    screen_size[0] = csize(resolution[0])
-    screen_size[1] = lsize(resolution[0])
-  end
+
+  -- Default sizes (same as original fallback)
+  local screen_size = { 50, 15 }
+
+  -- Set sizes based on estimated screen resolution
+  screen_size[1] = csize(screen_width, screen_height) -- Left panel size
+  screen_size[2] = lsize(screen_width, screen_height) -- Bottom panel size
+
   return screen_size
 end
 
@@ -64,7 +90,7 @@ return {
           },
         },
         position = "left",
-        size = sz[0],
+        size = sz[1],
       },
       {
         elements = {
@@ -74,7 +100,7 @@ return {
           },
         },
         position = "bottom",
-        size = sz[1],
+        size = sz[2],
       },
     },
   },
