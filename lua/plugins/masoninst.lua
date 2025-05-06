@@ -13,7 +13,6 @@ return {
         "hadolint",
         "debugpy",
         "pyright",
-        "ruff-lsp",
         "black",
         "codelldb",
         "texlab",
